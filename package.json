@@ -1,0 +1,38 @@
+{
+  "name": "rodo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "s4xthhhhh",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "@types/express": "^5.0.6",
+    "axios": "^1.13.5",
+    "bcryptjs": "^3.0.3",
+    "csvtojson": "^2.0.14",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mathjs": "^15.1.1",
+    "ml-random-forest": "^2.1.0",
+    "ngeohash": "^0.6.3",
+    "pg": "^8.18.0",
+    "prisma": "^7.4.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/mapbox__polyline": "^1.0.5",
+    "@types/ngeohash": "^0.6.8",
+    "@types/node": "^25.2.2",
+    "@types/pg": "^8.16.0"
+  }
+}
