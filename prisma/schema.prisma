@@ -17,6 +17,15 @@ model RoadQuality{
   geohash String @id
   roadQuality Float @default(0.6)
   sample Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TripDetails{
+  trip_id String @id @default(uuid())
+  distance_covered String 
+  user_id String
+  user Users @relation(fields: [user_id],references: [user_id])
 }
 
 model Users{
@@ -25,4 +34,6 @@ model Users{
   name String
   email String @unique
   password String 
+
+  trips TripDetails[]
 }

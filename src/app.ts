@@ -1,12 +1,13 @@
 import express from "express"
 import directionRouter from "./Routers/directionRouter.js"
 import userRouter from "./Routers/userRouter.js"
+import { userAuth } from "./middlewares/userAuth.js"
 
 const app=express()
 
 app.use(express.json())
 
-app.use("/api/v1/maps",directionRouter)
+app.use("/api/v1/maps",userAuth,directionRouter)
 app.use("/api/v1/users",userRouter)
 
 app.get("/health",(req,res)=>{

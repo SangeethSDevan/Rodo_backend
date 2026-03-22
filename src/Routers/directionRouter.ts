@@ -6,5 +6,6 @@ const directionRouter=express.Router()
 
 directionRouter.get("/",getDirection)
     .post("/",predictQuality)
+    
 
 export default directionRouter

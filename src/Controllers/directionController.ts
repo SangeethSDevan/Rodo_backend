@@ -4,7 +4,6 @@ import polyline from "@mapbox/polyline"
 import geohash from "ngeohash"
 import type { Request, Response } from "express";
 import { prisma } from "../utils/prisma.js";
-
 type DBRow={
     geohash:string,
     roadQuality:number
@@ -35,6 +34,7 @@ export const getDirection=async(req:Request,res:Response)=>{
         )
         const scoredRoutes:any[]=[]
         const routes=response.data.routes
+        const distance = routes[0].legs[0].distance.text;
         for(const route of routes){
             const polylineStr=route.overview_polyline.points;
 
@@ -59,7 +59,20 @@ export const getDirection=async(req:Request,res:Response)=>{
         const encodedPolyline=bestRoute.route.overview_polyline.points;
 
         const routeCoordinates=encodePolyline(encodedPolyline)
-
+        try{
+            await prisma.tripDetails.create({
+                data:{
+                    distance_covered:distance,
+                    user_id:req.user.user_id
+                }
+            })
+            
+        }catch(error){
+            return res.status(500).json({
+                status:"fail",
+                message:error instanceof Error? error.message:"Something went wrong!"
+            })
+        }
         return res.status(200).json({
             status:"success",
             message:"Directions fetched successfully!",
@@ -79,7 +92,6 @@ export const getDirection=async(req:Request,res:Response)=>{
         })
     }
 }
-
 const scoreRoute=(routeGeoHash:string[],dbRows:DBRow[])=>{
     const map=new Map(
         dbRows.map(r=>[r.geohash,r.roadQuality])
@@ -172,21 +184,4 @@ const encodePolyline=(encodedPolyline:string)=>{
         lat:p[0],
         lon:p[1]
     }))
-}
-
-const extractWayPoints=(
-    points:{lat:number,lon:number}[],
-    numberOfWaypoints:number
-)=>{
-    if(points.length===0) return [];
-
-    const step=Math.floor(points.length/numberOfWaypoints)
-    const waypoints=[]
-    for(let i=step;i<points.length-step;i+=step){
-        waypoints.push(points[i])
-    }
-
-    waypoints.push(points[points.length-1])
-
-    return waypoints
 }

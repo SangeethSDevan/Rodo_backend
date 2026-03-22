@@ -43,8 +43,6 @@ async function trainModel(){
 export const predictQuality = async (req:Request,res:Response)=>{
     const {rms_value,peak_count,geohash} = req.body
 
-    console.log(req.body)
-
     if (rms_value == null || peak_count == null || geohash == null) {
     return res.status(400).json({
         status: "fail",
