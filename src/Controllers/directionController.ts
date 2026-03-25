@@ -57,7 +57,7 @@ export const getDirection=async(req:Request,res:Response)=>{
         scoredRoutes.sort((a,b)=>b.score-a.score)
         const bestRoute=scoredRoutes[0]
         const encodedPolyline=bestRoute.route.overview_polyline.points;
-
+        
         const routeCoordinates=encodePolyline(encodedPolyline)
         try{
             await prisma.tripDetails.create({
