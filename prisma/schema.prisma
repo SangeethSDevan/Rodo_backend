@@ -21,6 +21,7 @@ model TripDetails{
   distance_covered String 
   user_id String
   user Users @relation(fields: [user_id],references: [user_id])
+  createdAt DateTime @default(now())
 }
 
 model Users{
